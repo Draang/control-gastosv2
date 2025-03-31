@@ -11,7 +11,7 @@ export const budgetReducer = (
 ) => {
   switch (action.type) {
     case "add-budget":
-      return { ...state };
+      return { ...state, budget: action.payload.budget };
 
     default:
       return state;

@@ -1,14 +1,21 @@
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import useBudget from "../hooks/useBudget";
 
 export default function BudgetForm() {
+  const { dispatch } = useBudget();
   const [budget, setBudget] = useState(0);
   const isValid = useMemo(() => budget > 0, [budget]);
   function handleChange(e: ChangeEvent<HTMLInputElement>): void {
     setBudget(e.target.valueAsNumber);
   }
 
+  function handleSubmit(e: FormEvent<HTMLFormElement>): void {
+    e.preventDefault();
+    dispatch({ type: "add-budget", payload: { budget } });
+  }
+
   return (
-    <form className="space-y-5">
+    <form className="space-y-5" onSubmit={handleSubmit}>
       <div className="flex flex-col space-y-5">
         <label
           htmlFor="budget"
